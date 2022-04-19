@@ -21,5 +21,5 @@ The proximal ADMM and the PDE-problems solved in the second experiment are taken
 following work:
 
 A semismooth Newton-proximal method of multipliers for ℓ1-regularized convex quadratic programming
-              Spyridon Pougkakiotis, Jacek Gondzio
-              https://doi.org/10.48550/arXiv.2201.10211
+              
+Spyridon Pougkakiotis, Jacek Gondzio,  https://doi.org/10.48550/arXiv.2201.10211
