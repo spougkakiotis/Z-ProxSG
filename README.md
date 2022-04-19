@@ -6,12 +6,12 @@ This file is used to derive the numerical results in the following paper:
 
 It contains two zeroth-order proximal stochastic gradient methods, a proximal stochastic 
 sub-gradient method, a stochastic proximal point method, as well as a proximal alternating
-direction method of multipliers suitable for the solution of $\ell_1$-regularized convex 
+direction method of multipliers suitable for the solution of ℓ1-regularized convex 
 quadratic programming. 
 
 Two experiments are set up:
   1) The solution of randomly generated phase retrieval instances (weakly convex problems)
-  2) The hyper-parameter tuning of the proximal ADMM for the solution of $L^1$-regularized,
+  2) The hyper-parameter tuning of the proximal ADMM for the solution of L1-regularized
      PDE-constrained optimization problems.
 
 Each file is heavily commented for the convenience of the user. Use help "fuction of interest" 
