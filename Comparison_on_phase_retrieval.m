@@ -26,7 +26,7 @@
     % Set the rng seed.
     rng('shuffle');
     % Problem dimensions (d = "size of unknown variable", m = "number of samples").
-    d = 30; m = 90;
+    d = 40; m = 60;
     % number of iterations to termination (as in Davis et. al.)
     T = 2e3*m;
     % Number of runs that we average
@@ -34,11 +34,11 @@
     % Plot convergence profiles?
     plot_f = true;
     % Which experiment to run? 1 for comparison, 2 for minibatching
-    experiment = 2; 
+    experiment = 1; 
     if (plot_f && experiment == 1)
         % objective function value within each run
         obj_all_Z_proxSG = zeros(T+1,averaging);
-        obj_all_TPZ_proxSG = zeros(T+1,averaging);
+        obj_all_DSZ_proxSG = zeros(T+1,averaging);
         obj_all_SPMM = zeros(T+1,averaging);
         obj_all_proxSSG = zeros(T+1,averaging);
     elseif (plot_f && experiment == 2)
@@ -78,23 +78,23 @@
 
 
             % ===================================================================== %
-            % Call TPZ_proxSG to solve the problem (Zeroth-order stochastic gradient)
+            % Call DSZ_proxSG to solve the problem (Zeroth-order stochastic gradient)
             % --------------------------------------------------------------------- %
             % Smoothing parameter
-            mu_1 = 5e-10;
-            mu_2 = 2.5e-10;
+            mu_1 = 5e-7;
+            mu_2 = 5e-10;
             % Learning rate
             alpha = (1/(sqrt(min(T,5e2*m))*(2*d)));
             % number of gradient estimates per iteration
             k = 1;
 
-            % Call TPZ_proxSG; the proximity operator of r() is the identity function
-            [sol_struct] = TPZ_proxSG(@(y,i) pb_struct.f_i(y,i),@(y,beta) y,...
+            % Call DSZ_proxSG; the proximity operator of r() is the identity function
+            [sol_struct] = DSZ_proxSG(@(y,i) pb_struct.f_i(y,i),@(y,beta) y,...
                                     @() pb_struct.sample_xi(),mu_1,mu_2,...
                                     pb_struct.data.start_point,T,alpha,k,...
                                     plot_f, @(y) pb_struct.f(y));
             if (plot_f)
-                obj_all_TPZ_proxSG(:,j) = sol_struct.obj_v;
+                obj_all_DSZ_proxSG(:,j) = sol_struct.obj_v;
             end
             % _____________________________________________________________________ %
             % ===================================================================== %
@@ -192,16 +192,21 @@
             avg_conv_profiles_and_CI(fig,x_axis,obj_all_Z_proxSG,[],[],[],'T','f(x)');
             hold on;
             grid off
-            avg_conv_profiles_and_CI(fig,x_axis,obj_all_TPZ_proxSG,'c','x',':','T','f(x)');
+            avg_conv_profiles_and_CI(fig,x_axis,obj_all_DSZ_proxSG,'c','x',':','T','f(x)');
             hold on;
             grid off    
             avg_conv_profiles_and_CI(fig,x_axis,obj_all_SPMM,'g','x','--','T','f(x)');
             hold on;
             avg_conv_profiles_and_CI(fig,x_axis,obj_all_proxSSG,'r','+','-.','T','f(x)');
-            legend("ZproxSG: Average","                95% CI","TPZproxSG: Average","                     95% CI",...
-                   "StochPPM: Average","                   95% CI",...
-                   "ProxSSG: Average","                 95% CI");
-            hold off;
+            legend("Average: ZproxSG","95% CI","Average: DSZproxSG","95% CI",...
+                   "Average: StochPPM","95% CI",...
+                   "Average: ProxSSG","95% CI");
+%             avg_conv_profiles_and_CI(fig,x_axis,obj_all_Z_proxSG,[],[],[],'T','f(x)');
+%             hold on;
+%             grid off
+%             avg_conv_profiles_and_CI(fig,x_axis,obj_all_DSZ_proxSG,'c','x',':','T','f(x)');
+%             legend("Average: ZproxSG","95% CI","Average: DSZproxSG","95% CI");
+%             hold off;
         end   
     elseif (experiment == 2)
         if (plot_f)
