@@ -3,7 +3,7 @@ A zeroth-order proximal stochastic gradient method for non-smooth and non-convex
 
 This file is used to derive the numerical results in the following paper:
 
-A Zeroth-order Proximal Stochastic Gradient Method for Weakly Convex Stochastic Optimization
+A Zeroth-order Proximal Stochastic Gradient Method for Weakly Convex Stochastic Optimization  
 Spyridon Pougkakiotis, Dionysios S. Kalogerias, https://arxiv.org/abs/2205.01633
 
 It contains two zeroth-order proximal stochastic gradient methods, a proximal stochastic 
